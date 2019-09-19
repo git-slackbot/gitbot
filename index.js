@@ -11,7 +11,8 @@ app.get('/status', jsonParser, function (req, res) {
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.post('/setup', jsonParser, function (req, res) {
-  console.log('header ', req.headers);
+  console.log('headers ', req.headers);
+  console.log('bdoy ', req.body);   
   let message = {
       response_type: 'in_channel'
   };
