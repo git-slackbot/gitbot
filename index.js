@@ -44,6 +44,7 @@ app.post('/setup', jsonParser, function (req, res) {
 })
 
 app.post('/approve', jsonParser, function (req, res) {
+   console.log(req.body);
    const body = req.body.text ? req.body.text : '';
    const args = body.split(' ');
    
@@ -55,6 +56,7 @@ app.post('/approve', jsonParser, function (req, res) {
    // invalid arguments
    if (args.length !== 3) {
       message.text = 'invalid arguments';
+      return res.json(message);
    }
 
    const [owner, repo, prNumber] = args;
@@ -69,13 +71,14 @@ app.post('/approve', jsonParser, function (req, res) {
             text: `sucessfully approved ${owner}/${repo}/${prNumber}`,
          };
 
-           res.json(message);
+          return res.json(message);
       } catch (e) {
           // Deal with the fact the chain failed
             const message = {
                response_type: 'in_channel',
                text: `failed to approve with error ${e}`,
             };
+            return res.json(message);
       }
    })();
 })
