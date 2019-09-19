@@ -6,6 +6,10 @@ const jsonParser = bodyParser.json();
 app.get('/status', jsonParser, function (req, res) {
    res.json({ "status": "ok" });
 });
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
 app.post('/setup', jsonParser, function (req, res) {
   console.log('header ', req.headers);
   let message = {
