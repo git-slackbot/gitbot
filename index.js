@@ -65,6 +65,8 @@ app.post('/approve', jsonParser, function (req, res) {
    (async () => {
       try {
          let response = await helper.perform(owner, repo, prNumber, 'APPROVE', userId);
+         
+         console.log(response);
          const message = {
             response_type: 'in_channel',
             text: `sucessfully approved ${owner}/${repo}/${prNumber}`,
