@@ -36,7 +36,7 @@ app.post('/setup', jsonParser, function (req, res) {
 
           return res.json(message);
       } catch (e) {
-          message.text = `failed with error ${e}`;
+          message.text = `failed to setup with error ${e}`;
 
           return res.json(message);
       }
@@ -44,32 +44,40 @@ app.post('/setup', jsonParser, function (req, res) {
 })
 
 app.post('/approve', jsonParser, function (req, res) {
-  const body = req.body.text ? req.body.text : '';
-  const args = query.split(' ');
-  let message = {
+   const body = req.body.text ? req.body.text : '';
+   const args = body.split(' ');
+   
+   console.log(args);
+   let message = {
       response_type: 'in_channel'
-  };
+   };
 
-  // invalid arguments
-  if (queries.length !== 3) {
+   // invalid arguments
+   if (args.length !== 3) {
       message.text = 'invalid arguments';
-  }
+   }
 
-  const [owner, repo, prNumber] = args;
+   const [owner, repo, prNumber] = args;
 
-  (async () => {
+   (async () => {
       try {
-        let response = await helper.perform(owner, repo, prNumber, 'APPROVE');
-        const message = {
+         let response = await helper.perform(owner, repo, prNumber, 'APPROVE');
+         
+         console.log(response);
+         const message = {
             response_type: 'in_channel',
             text: `sucessfully approved ${owner}/${repo}/${prNumber}`,
-        };
+         };
 
-        res.json(message);
+           res.json(message);
       } catch (e) {
           // Deal with the fact the chain failed
+            const message = {
+               response_type: 'in_channel',
+               text: `failed to approve with error ${e}`,
+            };
       }
-  })();
+   })();
 })
 
 app.use(function (req, res) {
