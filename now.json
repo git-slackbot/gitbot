@@ -1,6 +1,7 @@
 {
     "version": 2,
     "name": "express-now",
+    "scope": "git-slackbot",
     "builds": [{
         "src": "index.js",
         "use": "@now/node-server"
