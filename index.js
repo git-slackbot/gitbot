@@ -60,10 +60,12 @@ app.post('/approve', jsonParser, function (req, res) {
    }
 
    const [owner, repo, prNumber] = args;
+   const userId = body.user_id;
+
 
    (async () => {
       try {
-         let response = await helper.perform(owner, repo, prNumber, 'APPROVE');
+         let response = await helper.perform(owner, repo, prNumber, 'APPROVE', userId);
          
          console.log(response);
          const message = {
