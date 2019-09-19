@@ -45,8 +45,8 @@ app.post('/setup', jsonParser, function (req, res) {
 
 app.post('/approve', jsonParser, function (req, res) {
    console.log(req.body);
-   const body = req.body.text ? req.body.text : '';
-   const args = body.split(' ');
+   const bodytext = req.body.text ? req.body.text : '';
+   const args = bodytext.split(' ');
    
    console.log(args);
    let message = {
@@ -60,8 +60,7 @@ app.post('/approve', jsonParser, function (req, res) {
    }
 
    const [owner, repo, prNumber] = args;
-   const userId = body.user_id;
-
+   const userId = req.body.user_id;
 
    (async () => {
       try {
