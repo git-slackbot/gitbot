@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const perform = require('./lib/perform');
+const helper = require('./lib/helper');
 const app = express();
 const jsonParser = bodyParser.json();
 app.get('/status', jsonParser, function (req, res) {
@@ -28,7 +28,7 @@ app.post('/setup', jsonParser, function (req, res) {
 
   (async () => {
       try {
-          let response = await setup(userId, token);
+          let response = await helper.setup(userId, token);
           const message = {
               response_type: 'in_channel',
               text: `sucessfully setup`,
@@ -59,7 +59,7 @@ app.post('/approve', jsonParser, function (req, res) {
 
   (async () => {
       try {
-        let response = await perform(owner, repo, prNumber, 'APPROVE');
+        let response = await helper.perform(owner, repo, prNumber, 'APPROVE');
         const message = {
             response_type: 'in_channel',
             text: `sucessfully approved ${owner}/${repo}/${prNumber}`,
