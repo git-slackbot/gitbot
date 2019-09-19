@@ -11,20 +11,19 @@ app.get('/status', jsonParser, function (req, res) {
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.post('/setup', jsonParser, function (req, res) {
-  console.log('headers ', req.headers);
-  console.log('bdoy ', req.body);   
+  console.log('body ', req.body);   
   let message = {
       response_type: 'in_channel'
   };
 
   // invalid arguments
-  const args = req.headers.text.split(' ');
+  const args = req.body.text.split(' ');
   if (args.length !== 1) {
       message.text = 'invalid arguments';
       return res.json(message);
   }
 
-  const userId = req.headers.user_id;
+  const userId = req.body.user_id;
   const token = args[0];
 
   (async () => {
@@ -45,8 +44,7 @@ app.post('/setup', jsonParser, function (req, res) {
 })
 
 app.post('/approve', jsonParser, function (req, res) {
-  console.log('body ', req.headers);
-  const body = req.headers.text ? req.headers.text : '';
+  const body = req.body.text ? req.body.text : '';
   const args = query.split(' ');
   let message = {
       response_type: 'in_channel'
